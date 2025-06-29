@@ -47,7 +47,7 @@ app.get('/api/lookup', async (req,res)=>{
     const [fanID,name,mobile,,team]=row;
 
     const fRows=await read('Angel-Thon 7.0 Facilitators!A:E');
-    const facs=fRows.filter(r=> (r[4]||'').toLowerCase()===team.toLowerCase()).slice(0,3).map(r=>r[0]);
+    const facs=fRows.filter(r=> (r[4]||'').toLowerCase()===team.toLowerCase()).slice(0,3).map(r=>r[1]);
     if(facs.length<3) return res.json({status:'no_fac'});
 
     res.json({status:'ok',email,fanID,name,mobile,team,day,facilitators:facs});
