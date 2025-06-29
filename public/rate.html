@@ -1,106 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Facilitator Ratings</title>
+  <title>Facilitator Ratings | AngelThon 7.0</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--violet:#704bff}
-    html,body{margin:0;font-family:Roboto,Arial,sans-serif;background:#f5f7ff;color:#111}
-    h2{color:var(--violet);margin:0 0 1rem;font-weight:500;font-size:1.25rem}
-    h3{margin:1.8rem 0 .6rem;font-size:1rem;font-weight:500}
-    section{max-width:920px;margin:0 auto;padding:1rem 4vw}
-    table{width:100%;border-collapse:collapse}
-    td{padding:.35rem .4rem}
-    td.name{width:34%;white-space:nowrap}
-    /* slider + live value */
-    .wrap{position:relative}
-    input[type=range]{width:100%}
-    .val{position:absolute;top:100%;left:50%;transform:translate(-50%,.25rem);
-         font-size:.8rem;font-weight:500;color:var(--violet)}
-    /* mobile */
-    @media(max-width:640px){
-      table,tr,td{display:block;width:100%}
-      td.name{margin-top:1.4rem}
-      .wrap{margin-top:.35rem}
-      .val{left:auto;right:0;transform:translateY(.2rem)}
+    /* ------------------ Theme ------------------ */
+    :root {
+      --primary: #6d4bff;
+      --primary-light: #b6a6ff;
+      --bg-1: #f9faff;
+      --bg-2: #e9edff;
+      --bg-3: #dee4ff;
+      --card: #ffffffee;
+      --text: #111;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --radius: 18px;
     }
-    button{display:block;margin:2.2rem auto 1rem;background:var(--violet);
-           color:#fff;border:none;padding:.9rem 2.6rem;font-size:1rem;
-           border-radius:12px;cursor:pointer}
-    button:hover{background:#5d3ef8}
+
+    /* ------------------ Keyframes ------------------ */
+    @keyframes gradientShift { 0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%} }
+    @keyframes cardPop { 0%{opacity:0;transform:translateY(32px) scale(.95)}100%{opacity:1;transform:translateY(0) scale(1)} }
+    @keyframes fadeSlideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes buttonPulse {0%,100%{transform:translateY(0);box-shadow:0 4px 10px rgba(0,0,0,.12)}50%{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.18)}}
+
+    /* ------------------ Base ------------------ */
+    html,body{
+      margin:0;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:linear-gradient(135deg,var(--bg-1),var(--bg-2),var(--bg-3));
+      background-size:400% 400%;animation:gradientShift 10s linear infinite;
+      color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;
+    }
+    section{
+      max-width:960px;margin:48px auto;padding:32px 6vw 56px;
+      background:var(--card);backdrop-filter:blur(5px);border-radius:var(--radius);
+      box-shadow:0 12px 28px var(--shadow);animation:cardPop .7s cubic-bezier(.25,.8,.25,1) both;
+    }
+
+    /* ------------------ Typography ------------------ */
+    h1.event{margin:0 0 12px;font-size:2rem;font-weight:600;color:var(--primary);animation:fadeSlideUp .6s ease-out both}
+    h2{margin:0 0 28px;font-size:1.8rem;font-weight:500;color:var(--primary)}
+    h3{margin:44px 0 14px;font-size:1.1rem;font-weight:500;color:var(--primary);animation:fadeSlideUp .6s ease-out both}
+
+    /* ------------------ Slider ------------------ */
+    input[type=range].rating{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;background:#d7d7d7;cursor:pointer;transition:background .15s linear;outline:none}
+    input[type=range].rating::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 3px var(--primary-light);transition:transform .2s ease}
+    input.rating:active::-webkit-slider-thumb{transform:scale(1.25)}
+    input.rating::-moz-range-thumb{width:20px;height:20px;border:none;border-radius:50%;background:var(--primary)}
+
+    /* ------------------ Layout helpers ------------------ */
+    table{width:100%;border-collapse:collapse}
+    td{padding:8px 6px;vertical-align:top}
+    td.name{width:30%;white-space:nowrap;font-weight:500}
+    .wrap{position:relative;animation:fadeSlideUp .6s ease-out both}
+    .scale{display:flex;justify-content:space-between;font-size:.75rem;font-weight:600;color:#444;margin-top:10px;padding:0 2px;user-select:none}
+
+    @media(max-width:680px){
+      table,tr,td{display:block;width:100%}
+      section{margin:24px auto;padding:24px 5vw 40px}
+      h1.event{font-size:1.6rem;margin-bottom:8px}
+      h2{font-size:1.4rem;margin-bottom:20px}
+      h3{margin:32px 0 12px;font-size:1rem}
+      button{padding:14px 32px;font-size:.95rem}
+    }
+
+    /* ------------------ Button ------------------ */
+    button{display:block;margin:56px auto 12px;background:var(--primary);color:#fff;border:none;padding:16px 44px;font-size:1rem;border-radius:var(--radius);cursor:pointer;transition:background .2s ease}
+    button:hover{background:#5d3ef8;animation:buttonPulse .6s ease-out}
     .warn{text-align:center;font-size:.85rem;color:#b40000}
   </style>
 </head>
 <body>
-<section>
-  <h2 id="heading"></h2>
-  <div id="meta"></div>
-  <form id="form"></form>
-  <p class="warn">* Scores can’t be edited once submitted</p>
-</section>
+  <section>
+    <h1 class="event">AngelThon 7.0</h1>
+    <h2 id="heading"></h2>
+    <div id="meta"></div>
+    <form id="form"></form>
+    <p class="warn">* Scores can’t be edited once submitted</p>
+  </section>
 
-<script>
-/* ---------- data from previous page ---------- */
-const data = JSON.parse(sessionStorage.getItem('lookup')||'{}');
-if (!data.facilitators) location.href='/';
-
-/* ---------- page header ---------- */
-document.getElementById('heading').textContent =
-  data.team + ' — Facilitator Ratings';
-document.getElementById('meta').innerHTML =
-  `<b>Name:</b> ${data.name}<br><b>Email:</b> ${data.email}`;
-
-/* ---------- criteria ---------- */
-const crit = [
- 'Visibility & Presence','Energy & Motivation','Creative Engagement',
- 'Responsiveness','Encouragement & Acknowledgement','Emotional Support & Vibe Holding',
- 'Team Bonding','Consistency in Posting Prompts','Leadership Quality','Overall Experience'
-];
-
-/* ---------- build form ---------- */
-const form = document.getElementById('form');
-
-const makeRow = fac => `
-  <tr>
-    <td class="name">${fac}</td>
-    <td>
-      <div class="wrap">
-        <input type="range" min="1" max="10" value="5"
-               oninput="this.nextElementSibling.textContent=this.value">
-        <span class="val">5</span>
-      </div>
-    </td>
-  </tr>`;
-
-const blocks = crit.map((c,i)=>`
-  <h3>Q${i+1}. ${c}</h3>
-  <table>${data.facilitators.map(makeRow).join('')}</table>`).join('');
-
-form.innerHTML = blocks +
-  '<button>Submit Feedback</button>';
-
-/* ---------- submit ---------- */
-form.addEventListener('submit', async ev=>{
-  ev.preventDefault();
-  const sliders = [...document.querySelectorAll('input[type=range]')];
-  const scores  = [];
-  data.facilitators.forEach((fac,i)=>{
-    const vals=[];
-    for(let c=0;c<crit.length;c++){
-      vals.push(+sliders[c*data.facilitators.length+i].value);
+  <script>
+    /* ---------- DEV‑ONLY MOCKS ----------
+       Triggered on localhost or when URL includes ?mock=1 */
+    if((location.hostname==='localhost'||location.hostname==='127.0.0.1')||location.search.includes('mock=1')){
+      if(!sessionStorage.getItem('lookup')){
+        sessionStorage.setItem('lookup',JSON.stringify({
+          name:'Alex Doe',email:'alex@example.com',team:'Dream Team',
+          facilitators:['Facilitator One','Facilitator Two','Facilitator Three']
+        }));
+      }
+      (function(){const orig=window.fetch;window.fetch=async(url,opts={})=>{
+        if(url.endsWith('/api/lookup'))return new Response(sessionStorage.getItem('lookup')||'{}',{status:200,headers:{'Content-Type':'application/json'}});
+        if(url.endsWith('/api/feedback')){console.info('[mock] payload',opts.body);return new Response('{}',{status:200});}
+        return orig(url,opts);
+      };})();
     }
-    scores.push({fac,vals});
-  });
-  const payload = {...data,scores};
-  await fetch('/api/feedback',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  });
-  location.href='/thankyou.html';
-});
-</script>
+
+    function updateTrack(el){const pct=((el.value-el.min)/(el.max-el.min))*100;el.style.background=`linear-gradient(90deg,var(--primary) ${pct}%,#d7d7d7 ${pct}%)`;}
+
+    (function(){
+      const data=JSON.parse(sessionStorage.getItem('lookup')||'{}');
+      if(!Array.isArray(data.facilitators)||!data.facilitators.length){
+        document.getElementById('heading').textContent='Missing facilitator data';return;
+      }
+      document.getElementById('heading').textContent=`${data.team} — Facilitator Ratings`;
+      document.getElementById('meta').innerHTML=`<b>Name:</b> ${data.name}<br><b>Email:</b> ${data.email}`;
+
+      const crit=[
+        'Visibility & Presence','Energy & Motivation','Creative Engagement','Responsiveness',
+        'Encouragement & Acknowledgement','Emotional Support & Vibe Holding','Team Bonding','Consistency in Posting Prompts','Leadership Quality','Overall Experience'
+      ];
+
+      const form=document.getElementById('form');
+      const makeScale=()=>'<div class="scale">'+Array.from({length:10},(_,i)=>`<span>${i+1}</span>`).join('')+'</div>';
+      const makeRow=fac=>`<tr><td class="name">${fac}</td><td><div class="wrap"><input class="rating" type="range" min="1" max="10" value="5" aria-label="Rating for ${fac}" oninput="updateTrack(this)">${makeScale()}</div></td></tr>`;
+
+      form.innerHTML=
+        crit.map((c,i)=>`<h3 style="animation-delay:${i*0.05}s">Q${i+1}. ${c}</h3><table>${data.facilitators.map(makeRow).join('')}</table>`).join('')+
+        '<button type="submit">Submit Feedback</button>';
+
+      document.querySelectorAll('input.rating').forEach(updateTrack);
+
+      form.addEventListener('submit',async ev=>{
+        ev.preventDefault();
+        const sliders=[...document.querySelectorAll('input.rating')];
+        const scores=[];
+        data.facilitators.forEach((fac,i)=>{
+          const vals=[];for(let c=0;c<crit.length;c++){vals.push(+sliders[c*data.facilitators.length+i].value);}scores.push({fac,vals});});
+        try{
+          const res=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,scores})});
+          if(!res.ok)throw new Error(res.status);
+          alert('✅ Feedback submitted!');
+        }catch(err){alert('Submission failed');console.error(err);}
+      });
+    })();
+  </script>
 </body>
 </html>
