@@ -43,7 +43,7 @@ form.onsubmit=async ev=>{
   });
   const payload={...data,scores};
   await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  location.href='/public/thankyou.html';
+  location.href='/thankyou.html';
 };
 </script>
 </body></html>
