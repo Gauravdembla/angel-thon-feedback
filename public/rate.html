@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Facilitator Ratings | AngelThon 7.0</title>
+<title>Facilitator Ratings | AngelThon 7.0</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -42,28 +42,30 @@ h2{margin:0 0 28px;font-size:1.75rem;font-weight:500;color:var(--violet)}
 h3{margin:44px 0 14px;font-size:1.05rem;font-weight:500;color:var(--violet);animation:up .6s ease-out both}
 
 /* ---------- Table layout ---------- */
-table{width:100%;border-collapse:collapse}
-td{padding:4px 4px 0 0;vertical-align:top}
-td.name{width:32%;white-space:nowrap;font-weight:500}
+table{width:100%;border-collapse:collapse;margin-bottom:24px}
+td{padding:8px 12px 8px 0;vertical-align:middle}
+td.name{width:35%;font-weight:500;line-height:1.3;position:relative}
+
+/* Score display next to facilitator name */
+.score-display{
+  display:inline-block;margin-left:8px;padding:2px 6px;
+  background:var(--violet);color:#fff;border-radius:4px;
+  font-size:.75rem;font-weight:600;min-width:20px;text-align:center;
+}
 
 /* ---------- Slider ---------- */
 input.range{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;
   background:#d7d7d7;cursor:pointer;outline:none;transition:background .15s}
 input.range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
-  border-radius:50%;background:var(--violet);box-shadow:0 0 0 3px var(--violet-light);transition:transform .2s}
+  border-radius:50%;background:var(--violet);box-shadow:0 0 0 3px var(--violet-light);
+  transition:transform .2s;margin-top:0}
 input.range:active::-webkit-slider-thumb{transform:scale(1.25)}
-input.range::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--violet)}
+input.range::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;
+  background:var(--violet);margin-top:0}
 
 .wrap{margin-top:2px;position:relative;animation:up .6s ease-out both}
-.scale{display:flex;justify-content:space-between;margin-top:6px;padding:0 1px 0 2px;
+.scale{display:flex;justify-content:space-between;margin-top:8px;padding:0 1px 0 2px;
   font-size:.78rem;font-weight:600;color:#444;user-select:none;line-height:1}
-
-/* hide mid-digits on very narrow phones */
-@media(max-width:430px){
-  .scale span:nth-child(3),.scale span:nth-child(4),
-  .scale span:nth-child(5),.scale span:nth-child(6),
-  .scale span:nth-child(7),.scale span:nth-child(8){display:none}
-}
 
 /* ---------- Button ---------- */
 button{
@@ -77,14 +79,46 @@ button:hover{background:#5d3ef8;animation:pulse .6s ease-out}
 
 /* ---------- Mobile tweaks ---------- */
 @media(max-width:680px){
-  table,tr,td{display:block;width:100%}
-  section{margin:24px auto;padding:24px 5vw 40px}
-  h1.event{font-size:1.55rem;margin-bottom:8px}
-  h2{font-size:1.35rem;margin-bottom:20px}
-  h3{margin:32px 0 12px;font-size:1rem}
-  input.range{height:12px}
-  input.range::-webkit-slider-thumb,input.range::-moz-range-thumb{width:22px;height:22px}
-  button{padding:14px 32px;font-size:.95rem}
+  section{margin:16px;padding:20px 16px 32px;border-radius:12px}
+  
+  h1.event{font-size:1.5rem;margin-bottom:8px;text-align:center}
+  h2{font-size:1.25rem;margin-bottom:16px;text-align:center}
+  h3{margin:32px 0 16px;font-size:1rem}
+  
+  /* Mobile table layout - stack facilitators vertically */
+  table{margin-bottom:16px}
+  td{padding:6px 0;display:block;width:100%}
+  td.name{width:100%;margin-bottom:8px;padding-bottom:4px;
+    border-bottom:1px solid #eee;font-size:.95rem}
+  
+  /* Mobile sliders */
+  input.range{height:10px;margin-bottom:10px}
+  input.range::-webkit-slider-thumb,input.range::-moz-range-thumb{width:20px;height:20px}
+  
+  /* Better scale alignment on mobile */
+  .scale{margin-top:10px;padding:0 2px}
+  .scale span:not(:first-child):not(:nth-child(5)):not(:last-child){display:none}
+  
+  button{padding:12px 24px;font-size:.9rem;margin:40px auto 8px}
+  
+  /* Meta info styling for mobile */
+  #meta{font-size:.9rem;line-height:1.4;margin-bottom:20px;
+    background:#f8f9ff;padding:12px;border-radius:8px}
+}
+
+/* ---------- Very small screens ---------- */
+@media(max-width:400px){
+  section{margin:8px;padding:16px 12px 24px}
+  
+  h1.event{font-size:1.3rem}
+  h2{font-size:1.1rem}
+  h3{font-size:.95rem;margin:24px 0 12px}
+  
+  td.name{font-size:.9rem}
+  
+  button{padding:10px 20px;font-size:.85rem;margin:32px auto 8px}
+  
+  #meta{font-size:.85rem;padding:10px}
 }
 </style>
 </head>
@@ -94,7 +128,7 @@ button:hover{background:#5d3ef8;animation:pulse .6s ease-out}
   <h2 id="heading"></h2>
   <div id="meta"></div>
   <form id="form"></form>
-  <p class="warn">* Scores can’t be edited once submitted</p>
+  <p class="warn">* Scores can't be edited once submitted</p>
 </section>
 
 <script>
@@ -102,6 +136,12 @@ button:hover{background:#5d3ef8;animation:pulse .6s ease-out}
 function tint(el){
   const pct=((el.value-el.min)/(el.max-el.min))*100;
   el.style.background=`linear-gradient(90deg,var(--violet) ${pct}%,#d7d7d7 ${pct}%)`;
+}
+
+/* update score indicator */
+function updateScore(el){
+  const scoreDisplay = el.closest('tr').querySelector('.score-display');
+  if(scoreDisplay) scoreDisplay.textContent = el.value;
 }
 
 (function(){
@@ -126,11 +166,11 @@ function tint(el){
   const scale='<div class="scale">'+Array.from({length:10},(_,i)=>`<span>${i+1}</span>`).join('')+'</div>';
   const row=fac=>`
     <tr>
-      <td class="name">${fac}</td>
+      <td class="name">${fac}<span class="score-display">5</span></td>
       <td>
         <div class="wrap">
           <input class="range" type="range" min="1" max="10" value="5"
-                 aria-label="Rating for ${fac}" oninput="tint(this)">
+                 aria-label="Rating for ${fac}" oninput="tint(this); updateScore(this)">
           ${scale}
         </div>
       </td>
