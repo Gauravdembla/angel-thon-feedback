@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html><head>
-<meta charset="utf-8" />
-<title>Angel-Thon – Thank You</title>
-<style>
-body{font-family:Roboto,Arial,sans-serif;background:#f1f5ff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
-.box{background:#fff;padding:3rem;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.15);text-align:center}
-</style></head><body>
-<div class="box"><h2>Thank you!</h2><p>Your response has been captured.</p></div>
-</body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Angel-Thon — Thank You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      margin:0;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:Roboto,Arial,sans-serif;
+      background:#f1f5ff;
+    }
+    .box{
+      text-align:center;
+      background:#fff;
+      padding:3rem 2.5rem;
+      border-radius:18px;
+      box-shadow:0 6px 18px rgba(0,0,0,.15);
+    }
+    h2{margin:0 0 .6rem;font-weight:500;color:#6d4bff}
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>Thank you!</h2>
+    <p>Your response has been captured.</p>
+  </div>
+
+  <script>
+    /* Make the browser’s Back button return to the email page, not the rating page */
+    history.replaceState(null, '', '/');
+  </script>
+</body>
+</html>
