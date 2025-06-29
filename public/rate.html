@@ -121,10 +121,8 @@ function tint(el){
 
   document.getElementById('heading').textContent=
     `${data.team} — Facilitator Ratings`;
-  ddocument.getElementById('meta').innerHTML =
-  `<b>Name:</b> ${data.name}<br>
-   <b>Email:</b> ${data.email}<br>
-   <b>Mobile:</b> ${data.mobile}`;
+  document.getElementById('meta').innerHTML=
+    `<b>Name:</b> ${data.name}<br><b>Email:</b> ${data.email}`;
 
   const crit=[
     'Visibility & Presence','Energy & Motivation','Creative Engagement',
