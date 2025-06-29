@@ -54,7 +54,7 @@
     td{padding:8px 6px;vertical-align:top}
     td.name{width:30%;white-space:nowrap;font-weight:500}
     .wrap{position:relative;animation:fadeSlideUp .6s ease-out both}
-    .scale{display:flex;justify-content:space-between;font-size:.75rem;font-weight:600;color:#444;margin-top:10px;padding:0 2px;user-select:none}
+    .scale{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;color:#333;margin-top:12px;padding:0 4px;user-select:none}
 
     @media(max-width:680px){
       table,tr,td{display:block;width:100%}
@@ -69,6 +69,13 @@
     button{display:block;margin:56px auto 12px;background:var(--primary);color:#fff;border:none;padding:16px 44px;font-size:1rem;border-radius:var(--radius);cursor:pointer;transition:background .2s ease}
     button:hover{background:#5d3ef8;animation:buttonPulse .6s ease-out}
     .warn{text-align:center;font-size:.85rem;color:#b40000}
+    /* Mobile tweaks */
+    @media(max-width:680px){
+      input[type=range].rating{height:12px}
+      input[type=range].rating::-webkit-slider-thumb{width:24px;height:24px}
+      input.rating::-moz-range-thumb{width:24px;height:24px}
+      .scale{font-size:.95rem;margin-top:14px}
+    }
   </style>
 </head>
 <body>
