@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8" />
+<title>Angel-Thon – Rate Facilitators</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{font-family:Roboto,Arial,sans-serif;background:#fafcff;padding:1rem 4vw}
+h2{color:#704bff;margin:0 0 .7rem}
+table{width:100%;border-spacing:0 8px}
+td:first-child{width:40%} input[type=range]{width:100%}
+button{margin-top:1rem;background:#704bff;color:#fff;border:none;padding:.8rem 2rem;border-radius:10px;font-size:1rem;cursor:pointer}
+</style>
+</head><body>
+<h2 id="heading"></h2>
+<div id="meta"></div>
+<form id="form"></form>
+
+<script>
+const data=JSON.parse(sessionStorage.getItem('lookup')||'{}');
+if(!data.facilitators){location.href='/';}
+document.getElementById('heading').textContent=data.team+' — Facilitator Ratings';
+document.getElementById('meta').innerHTML=`<b>Name:</b> ${data.name}<br><b>Email:</b> ${data.email}`;
+const crit=['Visibility & Presence','Energy & Motivation','Creative Engagement','Responsiveness','Encouragement & Acknowledgement','Emotional Support & Vibe Holding','Team Bonding','Consistency in Posting Prompts','Leadership Quality','Overall Experience'];
+const form=document.getElementById('form');
+crit.forEach(c=>{
+  const h=document.createElement('h3');h.textContent=c;form.appendChild(h);
+  const tbl=document.createElement('table');form.appendChild(tbl);
+  data.facilitators.forEach(f=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${f}</td><td><input type="range" min="1" max="10" value="5"></td><td>5</td>`;
+    tr.querySelector('input').oninput=e=>tr.lastChild.textContent=e.target.value;
+    tbl.appendChild(tr);
+  });
+});
+const btn=document.createElement('button');btn.textContent='Submit Feedback';form.appendChild(btn);
+form.onsubmit=async ev=>{
+  ev.preventDefault();
+  const sliders=[...document.querySelectorAll('input[type=range]')];
+  const scores=[];
+  data.facilitators.forEach((fac,i)=>{
+    const vals=[];for(let c=0;c<crit.length;c++){vals.push(+sliders[c*data.facilitators.length+i].value);}
+    scores.push({fac,vals});
+  });
+  const payload={...data,scores};
+  await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  location.href='/public/thankyou.html';
+};
+</script>
+</body></html>
