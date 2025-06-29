@@ -1,6 +1,11 @@
+# Secrets & credentials
 service-account.json
 .env
-node_modules
-.DS_Store # one-time
-.DS_Store # one-time
+
+# Node dependencies / build artefacts
+node_modules/
+package-lock.json
+
+# macOS
 .DS_Store
+
